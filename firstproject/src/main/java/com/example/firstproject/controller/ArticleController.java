@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -52,6 +53,22 @@ public class ArticleController {
 
         // 3. 뷰 페이지 반환하기
         return "articles/show";
+    }
+
+    /*
+    * 리포지토리는 DB에 데이터 조회 요청 -> DB는 해당 데이터를 찾아 엔티티로 반환
+    * 반환된 엔티티를 뷰 템플릿으로 전달
+    * */
+    @GetMapping("/articles")
+    public String index(Model model){
+        // 1.모든 데이터 가져오기
+        List<Article> articleList =  articleRepository.findAll();
+
+        // 2. 모델에 데이터 등록하기
+        model.addAttribute("articleList",articleList);
+
+        // 3. 뷰 페이지 설정하기
+        return "articles/index";
     }
 
 }
