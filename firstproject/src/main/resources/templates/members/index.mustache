@@ -12,11 +12,13 @@
     {{#list}}
     <tr>
         <th>{{id}}</th>
-        <td>{{email}}</td>
+        <td><a href="/members/{{id}}">{{email}}</a></td>
         <td>{{password}}</td>
     </tr>
     {{/list}}
     </tbody>
 </table>
+
+<a href="/signup">회원가입</a>
 
 {{>layouts/footer}}
