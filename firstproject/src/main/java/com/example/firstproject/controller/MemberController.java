@@ -55,4 +55,26 @@ public class MemberController {
         model.addAttribute("list",list);
         return "members/index";
     }
+
+    @GetMapping("members/{id}/edit")
+    public String update(@PathVariable Long id, Model model){
+        Member editMember = memberRepository.findById(id).orElse(null);
+        model.addAttribute("member", editMember);
+        return "members/edit";
+    }
+
+    @PostMapping("/members/update")
+    public String update(MemberForm form){
+
+        Member editEntity = form.toEntity();
+
+        Member target = memberRepository.findById(editEntity.getId()).orElse(null);
+
+        if(target != null){
+            memberRepository.save(editEntity);
+        }
+
+        return "redirect:/members/" + editEntity.getId();
+
+    }
 }
