@@ -23,4 +23,6 @@ public class Comment {
     private String nickname; // 댓글을 단 사람
     @Column
     private String body; // 댓글 본문
+
+
 }
