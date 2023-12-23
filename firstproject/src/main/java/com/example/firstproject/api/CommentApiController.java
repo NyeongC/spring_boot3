@@ -1,13 +1,11 @@
-package com.example.firstproject.controller;
+package com.example.firstproject.api;
 
 import com.example.firstproject.dto.CommentDto;
 import com.example.firstproject.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +23,13 @@ public class CommentApiController {
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
     // 2. 댓글 생성
+    @PostMapping("/api/articles/{article_id}/comments")
+    public ResponseEntity<CommentDto> create(@PathVariable Long article_id, @RequestBody CommentDto dto){
+        // 서비스 위임
+        CommentDto commentDto = commentService.create(article_id,dto);
+        // 결과 응답
+        return ResponseEntity.status(HttpStatus.OK).body(commentDto);
+    }
     // 3. 댓글 수정
     // 4. 댓글 삭제
 }
