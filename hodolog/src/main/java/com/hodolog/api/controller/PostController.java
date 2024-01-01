@@ -10,7 +10,7 @@ public class PostController {
 
 
     @PostMapping("/posts")
-    public String get(PostCreate postCreate){
+    public String get(@RequestBody PostCreate postCreate){
         log.info("params={}",postCreate.toString());
         return "Hello World!";
     }
