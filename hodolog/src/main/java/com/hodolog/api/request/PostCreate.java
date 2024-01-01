@@ -1,5 +1,6 @@
 package com.hodolog.api.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -7,7 +8,10 @@ import lombok.ToString;
 @Setter
 public class PostCreate {
 
-    String title;
-    String content;
+    @NotBlank
+    private String title;
+
+    @NotBlank
+    private String content;
 
 }
