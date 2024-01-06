@@ -3,6 +3,8 @@ package com.hodolog.api.service;
 import com.hodolog.api.domain.Post;
 import com.hodolog.api.repository.PostRepository;
 import com.hodolog.api.request.PostCreate;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +17,16 @@ class PostServiceTest {
 
     @Autowired
     PostService postService;
-    
+
     @Autowired
     PostRepository postRepository;
+
+    @BeforeEach
+    void clean(){
+        postRepository.deleteAll();
+    }
+
+
 
     @Test
     @DisplayName("글 작성")
@@ -35,5 +44,21 @@ class PostServiceTest {
         // then
         assertEquals(postRepository.count(),1L);
 
+    }
+    @Test
+    @DisplayName("글 1개 조회")
+    void test2() {
+        // given
+        PostCreate postCreate = PostCreate.builder()
+                .title("제목입니다22")
+                .content("내용입니다22")
+                .build();
+        postService.write(postCreate);
+
+        // when
+        Post post = postService.get(2L);
+
+        // then
+        assertEquals(post.getTitle(),postCreate.getTitle());
     }
 }
