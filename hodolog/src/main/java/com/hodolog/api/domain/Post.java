@@ -2,6 +2,7 @@ package com.hodolog.api.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +20,8 @@ public class Post {
     @Lob
     private String content;
 
-    public Post(String title, String content) {
+    @Builder
+    public Post(String content, String title) {
         this.title = title;
         this.content = content;
     }
