@@ -112,17 +112,15 @@ class PostControllerTest {
     @DisplayName("글 여러개 조회")
     void test5() throws Exception {
         // given
-        Post post = Post.builder()
+        Post post = postRepository.save(Post.builder()
                 .title("choi")
                 .content("nyeong")
-                .build();
-        postRepository.save(post);
+                .build());
 
-        Post post2 = Post.builder()
+        Post post2 = postRepository.save(Post.builder()
                 .title("choi2")
                 .content("yeong")
-                .build();
-        postRepository.save(post2);
+                .build());
 
         // expected
         mockMvc.perform(MockMvcRequestBuilders.get("/posts")
@@ -133,6 +131,9 @@ class PostControllerTest {
                 .andExpect(jsonPath("$[0].id").value(post.getId()))
                 .andExpect(jsonPath("$[0].title").value(post.getTitle()))
                 .andExpect(jsonPath("$[0].content").value(post.getContent()))
+                .andExpect(jsonPath("$[1].id").value(post2.getId()))
+                .andExpect(jsonPath("$[1].title").value("choi2"))
+                .andExpect(jsonPath("$[1].content").value("yeong"))
                 .andDo(MockMvcResultHandlers.print());
 
     }
