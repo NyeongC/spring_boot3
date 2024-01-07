@@ -3,6 +3,7 @@ package com.hodolog.api.service;
 import com.hodolog.api.domain.Post;
 import com.hodolog.api.repository.PostRepository;
 import com.hodolog.api.request.PostCreate;
+import com.hodolog.api.response.PostResponse;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,9 +57,9 @@ class PostServiceTest {
         postService.write(postCreate);
 
         // when
-        Post post = postService.get(2L);
+        PostResponse postResponse = postService.get(2L);
 
         // then
-        assertEquals(post.getTitle(),postCreate.getTitle());
+        assertEquals(postResponse.getTitle(),postCreate.getTitle());
     }
 }
