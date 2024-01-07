@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -31,5 +32,10 @@ public class PostController {
     public PostResponse get(@PathVariable(name = "postId") Long id){
         PostResponse response = postService.get(id);
         return response;
+    }
+
+    @GetMapping("/posts")
+    List<PostResponse> getList(){
+        return postService.getList();
     }
 }

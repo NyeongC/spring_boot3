@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -36,12 +39,27 @@ public class PostService {
         * 응답 클래스 분리
         *
         * */
-        PostResponse postResponse = PostResponse.builder()
+        return PostResponse.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .build();
+    }
 
-        return postResponse;
+    public List<PostResponse> getList() {
+        // map 을 통해 하면 반복작업 -> 생성자 오버로딩으로 변환
+//        return postRepository.findAll()
+//                .stream()
+//                .map(post -> PostResponse.builder()
+//                        .id(post.getId())
+//                        .title(post.getTitle())
+//                        .content(post.getContent())
+//                        .build())
+//                .collect(Collectors.toList());
+        return postRepository.findAll()
+                .stream()
+                //.map(post-> new PostResponse(post))
+                .map(PostResponse::new)
+                .collect(Collectors.toList());
     }
 }

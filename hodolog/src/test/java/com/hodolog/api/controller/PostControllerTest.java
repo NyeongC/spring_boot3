@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hodolog.api.domain.Post;
 import com.hodolog.api.repository.PostRepository;
 import com.hodolog.api.request.PostCreate;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.regex.Matcher;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -101,6 +104,35 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.id").value(post.getId()))
                 .andExpect(jsonPath("$.title").value("choi123412341234"))
                 .andExpect(jsonPath("$.content").value("nyeong"))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+    @Test
+    @DisplayName("글 여러개 조회")
+    void test5() throws Exception {
+        // given
+        Post post = Post.builder()
+                .title("choi")
+                .content("nyeong")
+                .build();
+        postRepository.save(post);
+
+        Post post2 = Post.builder()
+                .title("choi2")
+                .content("yeong")
+                .build();
+        postRepository.save(post2);
+
+        // expected
+        mockMvc.perform(MockMvcRequestBuilders.get("/posts")
+                        .contentType(MediaType.APPLICATION_JSON))
+
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()", Matchers.is(2)))
+                .andExpect(jsonPath("$[0].id").value(post.getId()))
+                .andExpect(jsonPath("$[0].title").value(post.getTitle()))
+                .andExpect(jsonPath("$[0].content").value(post.getContent()))
                 .andDo(MockMvcResultHandlers.print());
 
     }

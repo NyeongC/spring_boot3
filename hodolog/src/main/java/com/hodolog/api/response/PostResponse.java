@@ -1,5 +1,6 @@
 package com.hodolog.api.response;
 
+import com.hodolog.api.domain.Post;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,5 +17,11 @@ public class PostResponse {
         this.id = id;
         this.title = title.substring(0,Math.min(title.length(),10)); // 클라이언트 요구사항 응답객체 10자 제한
         this.content = content;
+    }
+
+    public PostResponse(Post post) {
+        this.id = post.getId();
+        this.title = post.getTitle();
+        this.content = post.getContent();
     }
 }
