@@ -7,6 +7,9 @@ import com.hodolog.api.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +49,7 @@ public class PostService {
                 .build();
     }
 
-    public List<PostResponse> getList() {
+    public List<PostResponse> getList(Pageable pageable) {
         // map 을 통해 하면 반복작업 -> 생성자 오버로딩으로 변환
 //        return postRepository.findAll()
 //                .stream()
@@ -56,7 +59,10 @@ public class PostService {
 //                        .content(post.getContent())
 //                        .build())
 //                .collect(Collectors.toList());
-        return postRepository.findAll()
+
+        // Pageable
+        //Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "id"));
+        return postRepository.findAll(pageable)
                 .stream()
                 //.map(post-> new PostResponse(post))
                 .map(PostResponse::new)
