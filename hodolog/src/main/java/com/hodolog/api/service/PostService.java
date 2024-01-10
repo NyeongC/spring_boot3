@@ -3,6 +3,7 @@ package com.hodolog.api.service;
 import com.hodolog.api.domain.Post;
 import com.hodolog.api.repository.PostRepository;
 import com.hodolog.api.request.PostCreate;
+import com.hodolog.api.request.PostSearch;
 import com.hodolog.api.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,20 +50,8 @@ public class PostService {
                 .build();
     }
 
-    public List<PostResponse> getList(Pageable pageable) {
-        // map 을 통해 하면 반복작업 -> 생성자 오버로딩으로 변환
-//        return postRepository.findAll()
-//                .stream()
-//                .map(post -> PostResponse.builder()
-//                        .id(post.getId())
-//                        .title(post.getTitle())
-//                        .content(post.getContent())
-//                        .build())
-//                .collect(Collectors.toList());
-
-        // Pageable
-        //Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "id"));
-        return postRepository.findAll(pageable)
+    public List<PostResponse> getList(PostSearch postSearch) {
+        return postRepository.getList(postSearch)
                 .stream()
                 //.map(post-> new PostResponse(post))
                 .map(PostResponse::new)

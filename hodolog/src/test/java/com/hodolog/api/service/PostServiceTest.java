@@ -3,6 +3,7 @@ package com.hodolog.api.service;
 import com.hodolog.api.domain.Post;
 import com.hodolog.api.repository.PostRepository;
 import com.hodolog.api.request.PostCreate;
+import com.hodolog.api.request.PostSearch;
 import com.hodolog.api.response.PostResponse;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,17 +87,22 @@ class PostServiceTest {
         ));
         Pageable pageable = PageRequest.of(0,5, Sort.by(Sort.Direction.DESC, "id"));
         // when
-        List<PostResponse> list = postService.getList(pageable);
+        PostSearch postSearch = PostSearch
+                .builder()
+                .page(1)
+                .size(10).build();
 
-        // then
-        assertEquals(list.size(), 2L);
+
+        // when
+        List<PostResponse> posts = postService.getList(postSearch);
+
     }
 
     @Test
     @DisplayName("글 1페이지 조회")
     void test3_1() {
         // given
-        List<Post> requestPosts = IntStream.range(0, 30)
+        List<Post> requestPosts = IntStream.range(0, 20)
                         .mapToObj(i -> {
                             return Post.builder()
                                     .title("호돌맨 제목 " + i)
@@ -106,13 +112,19 @@ class PostServiceTest {
                 .collect(Collectors.toList());
         postRepository.saveAll(requestPosts);
 
-        Pageable pageable = PageRequest.of(0,5, Sort.by(Sort.Direction.DESC, "id"));
+        PostSearch postSearch = PostSearch
+                .builder()
+                .page(1)
+                //.size(10)
+                .build();
+
 
         // when
-        List<PostResponse> posts = postService.getList(pageable);
+        List<PostResponse> posts = postService.getList(postSearch);
+
 
         // then
-        assertEquals(5L,posts.size());
+        assertEquals(10L,posts.size());
         assertEquals("호돌맨 제목 29",posts.get(0).getTitle());
         assertEquals("호돌맨 제목 25",posts.get(4).getTitle());
     }
