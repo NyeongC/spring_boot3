@@ -1,8 +1,10 @@
 package com.hodolog.api.service;
 
 import com.hodolog.api.domain.Post;
+import com.hodolog.api.domain.PostEditor;
 import com.hodolog.api.repository.PostRepository;
 import com.hodolog.api.request.PostCreate;
+import com.hodolog.api.request.PostEdit;
 import com.hodolog.api.request.PostSearch;
 import com.hodolog.api.response.PostResponse;
 import lombok.RequiredArgsConstructor;
@@ -56,5 +58,19 @@ public class PostService {
                 //.map(post-> new PostResponse(post))
                 .map(PostResponse::new)
                 .collect(Collectors.toList());
+    }
+
+    public void edit(Long id , PostEdit postEdit){
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+
+        PostEditor.PostEditorBuilder editorBuilder = post.toEditor();
+
+        PostEditor postEditor = editorBuilder
+                .title(postEdit.getTitle())
+                .content(postEdit.getContent())
+                .build();
+
+        post.edit(postEditor);
     }
 }
