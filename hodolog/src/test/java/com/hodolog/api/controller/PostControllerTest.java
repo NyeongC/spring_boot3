@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hodolog.api.domain.Post;
 import com.hodolog.api.repository.PostRepository;
 import com.hodolog.api.request.PostCreate;
+import com.hodolog.api.request.PostEdit;
 import com.hodolog.api.response.PostResponse;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -220,6 +221,38 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.length()",Matchers.is(10)))
                 .andExpect(jsonPath("$[0].title").value("foo 19"))
                 .andExpect(jsonPath("$[0].content").value("bar 19"))
+                .andDo(MockMvcResultHandlers.print());
+
+
+    }
+
+    @Test
+    @DisplayName("게시글 제목 수정")
+    void test7() throws Exception {
+        // given
+        Post post = Post.builder()
+                .title("ccn")
+                .content("9257")
+                .build();
+
+        postRepository.save(post);
+
+        PostEdit updateRequest = PostEdit.builder()
+                .title("CCN")
+                .content("9965")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(updateRequest);
+
+
+        // expected
+        //mockMvc.perform(MockMvcRequestBuilders.get("/posts?page=1&sort=id,desc&size=5")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/posts/{postId}", post.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isOk())
+                //.andExpect(jsonPath("$.title").value("CCN"))
                 .andDo(MockMvcResultHandlers.print());
 
 
