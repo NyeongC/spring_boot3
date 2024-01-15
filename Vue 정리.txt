@@ -1,0 +1,31 @@
+1. Node.js 설치
+https://nodejs.org/en/download/
+공홈에서 msi 파일로 설치
+
+
+2. Vue.js 설치
+프로젝트 터미널에서 
+npm install -g @vue/cli
+
+프로젝트 내에 설치되는게 아닌
+뷰 설치는 pc환경 전역의 개념
+
+3. 뷰 프로젝트 init
+npm init vue@latest
+
+√ Project name: ... front
+√ Add TypeScript? ...  Yes
+√ Add JSX Support? ... Yes
+√ Add Vue Router for Single Page Application development? Yes
+√ Add Pinia for state management? ... Yes
+√ Add Vitest for Unit Testing? ... No
+√ Add an End-to-End Testing Solution? » No
+√ Add ESLint for code quality? ...  Yes
+? Add Prettier for code formatting? »  Yes
+
+cd front
+npm install
+npm run format
+npm run dev
+
+
