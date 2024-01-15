@@ -257,4 +257,27 @@ class PostControllerTest {
 
 
     }
+
+    @Test
+    @DisplayName("게시글 삭제")
+    void test8() throws Exception {
+        // given
+        Post post = Post.builder()
+                .title("ccn")
+                .content("9257")
+                .build();
+
+        postRepository.save(post);
+
+        // expected
+        //mockMvc.perform(MockMvcRequestBuilders.get("/posts?page=1&sort=id,desc&size=5")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/posts/{postId}", post.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+
+
+
+    }
 }

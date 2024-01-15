@@ -6,10 +6,7 @@ import com.hodolog.api.request.PostCreate;
 import com.hodolog.api.request.PostEdit;
 import com.hodolog.api.request.PostSearch;
 import com.hodolog.api.response.PostResponse;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
@@ -155,6 +152,26 @@ class PostServiceTest {
 
         assertEquals("호돌걸",changedPost.getTitle());
         assertEquals("반포자이",changedPost.getContent());
+
+    }
+
+    @Test
+    @DisplayName("게시글 삭제")
+    void test5(){
+        // given
+        Post post = Post.builder()
+                .title("호돌맨")
+                .content("반포자이")
+                .build();
+
+        postRepository.save(post);
+
+        // when
+        postService.detele(post.getId());
+
+        // then
+        Assertions.assertEquals(0, postRepository.count());
+
 
     }
 }
