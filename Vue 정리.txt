@@ -46,3 +46,8 @@ https://getbootstrap.com/
 npm i bootstrap@5.3.2
 main.ts 임포트
 import "bootstrap/dist/css/bootstrap.min.css"
+
+- axios 설치
+npm install axios
+
+import axios from 'axios';
