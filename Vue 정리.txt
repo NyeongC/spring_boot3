@@ -1,9 +1,12 @@
 1. Node.js 설치
 https://nodejs.org/en/download/
 공홈에서 msi 파일로 설치
-
+확인
+node -v 
 
 2. Vue.js 설치
+확인
+vue --version
 프로젝트 터미널에서 
 npm install -g @vue/cli
 
@@ -28,4 +31,18 @@ npm install
 npm run format
 npm run dev
 
+- 엘리먼트 플러스 설치
+npm install element-plus --save
 
+설치 후 main.ts 에 추가
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
+추가
+app.use(ElementPlus)
+
+- 부트스트랩 설치
+https://getbootstrap.com/
+npm i bootstrap@5.3.2
+main.ts 임포트
+import "bootstrap/dist/css/bootstrap.min.css"
