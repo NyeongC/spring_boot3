@@ -7,7 +7,7 @@ const content = ref("")
 
 const write = function (){
   //alert(title + " / "+ content)
-  axios.post("http://localhost:8080/posts",
+  axios.post("/api/posts",
       {
         title: title.value,
         content: content.value
