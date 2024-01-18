@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import {ref} from "vue"
 import axios from 'axios';
+import {useRouter} from "vue-router";
 
 const title = ref("")
 const content = ref("")
+const router = useRouter()
 
 const write = function (){
   //alert(title + " / "+ content)
@@ -11,6 +13,10 @@ const write = function (){
       {
         title: title.value,
         content: content.value
+      })
+      .then(()=>{
+        router.replace({ name : "home"});
+
       })
 
 }
