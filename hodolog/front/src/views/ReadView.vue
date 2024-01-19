@@ -4,6 +4,8 @@
 
 import {onMounted, defineProps, ref} from "vue";
 import axios from "axios";
+import Router from "@/router";
+import {useRouter} from "vue-router";
 
 const props = defineProps({
   postId: {
@@ -28,11 +30,20 @@ onMounted(()=>{
       })
 
 });
+
+const router = useRouter();
+
+const moveToEdit = () =>{
+  router.push({name:"edit"})
+}
+
 </script>
 
 <template>
   <div>{{post.title}}</div>
   <div>{{ post.content }}</div>
+
+  <el-button type="warning" @click="moveToEdit()">수정</el-button>
 </template>
 
 <style scoped>
