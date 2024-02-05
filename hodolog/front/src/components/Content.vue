@@ -15,6 +15,6 @@ import {RouterView} from "vue-router";
 
 <style>
 .content {
-  height: calc(100vh - 60px);
+
 }
 </style>

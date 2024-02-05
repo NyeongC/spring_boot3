@@ -51,3 +51,5 @@ import "bootstrap/dist/css/bootstrap.min.css"
 npm install axios
 
 import axios from 'axios';
+
+npm install -D sass
