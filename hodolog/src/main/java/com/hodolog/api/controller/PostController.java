@@ -26,7 +26,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/posts")
-    public void post(@RequestBody @Valid PostCreate request, @RequestParam String authorization){
+    public void post(@RequestBody @Valid PostCreate request, @RequestHeader String authorization){
         //log.info("params={}",postCreate.toString());
         if(authorization.equals("ccn")){
             postService.write(request);

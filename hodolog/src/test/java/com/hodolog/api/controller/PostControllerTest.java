@@ -297,7 +297,9 @@ class PostControllerTest {
         System.out.println("request_json = " + request_json);
 
         // when
-        mockMvc.perform(MockMvcRequestBuilders.post("/posts?authorization=ccn")
+        //mockMvc.perform(MockMvcRequestBuilders.post("/posts?authorization=ccn")
+        mockMvc.perform(MockMvcRequestBuilders.post("/posts")
+                        .header("authorization","ccn")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(request_json)
                         //.content("{\"title\": \"제목입니다.\",\"content\": \"내용입니다.\"}") 보기에도 불편하고 짜침
