@@ -85,7 +85,7 @@ class PostControllerTest {
         assertEquals(1L,postRepository.count()); // 디비에 하나 넣어서 1L
 
         Post post = postRepository.findAll().get(0);
-        assertEquals("제목입니다.2",post.getTitle());
+        assertEquals("제목입니다.",post.getTitle()); // 기대값 실제값
         assertEquals("내용입니다.",post.getContent());
     }
 
@@ -280,4 +280,38 @@ class PostControllerTest {
 
 
     }
+    @Test
+    @DisplayName("/posts 요청시 DB에 값이 저장된다. 인증 추가")
+    void test9() throws Exception {
+
+        // given
+        //PostCreate request = new PostCreate("제목입니다.","내용입니다.");
+        PostCreate request = PostCreate.builder()
+                .title("제목입니다.")
+                .content("내용입니다.")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String request_json = objectMapper.writeValueAsString(request);
+
+        System.out.println("request_json = " + request_json);
+
+        // when
+        mockMvc.perform(MockMvcRequestBuilders.post("/posts?authorization=ccn")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(request_json)
+                        //.content("{\"title\": \"제목입니다.\",\"content\": \"내용입니다.\"}") 보기에도 불편하고 짜침
+                        //.content("{\"title\": \"\",\"content\": \"내용입니다.\"}")
+                )
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+        // then
+        assertEquals(1L,postRepository.count()); // 디비에 하나 넣어서 1L
+
+        Post post = postRepository.findAll().get(0);
+        assertEquals("제목입니다.",post.getTitle()); // 기대값 실제값
+        assertEquals("내용입니다.",post.getContent());
+    }
 }
+
