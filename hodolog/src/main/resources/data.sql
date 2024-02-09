@@ -1,0 +1,1 @@
+insert into users(name,email,password) values ('ccn','ccn@naver.com','1234');
