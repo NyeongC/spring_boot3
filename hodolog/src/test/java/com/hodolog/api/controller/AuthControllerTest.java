@@ -1,6 +1,7 @@
 package com.hodolog.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hodolog.api.domain.Session;
 import com.hodolog.api.domain.Users;
 import com.hodolog.api.repository.SessionRepository;
 import com.hodolog.api.repository.UserRepository;
@@ -106,6 +107,67 @@ class AuthControllerTest {
                 .orElseThrow(RuntimeException::new);
 
         Assertions.assertEquals(1L,loginedUser.getSessions().size());
+
+
+    }
+
+    @Test
+    @DisplayName("로그인 후 권한이 필요한 페이지에 접속한다. /foo")
+    void test3() throws Exception{
+
+        // given
+        Users user = userRepository.save(Users.builder()
+                .name("ccn")
+                .email("ccn@naver.com")
+                .password("1234")
+                .build());
+        Session session = user.addSession();
+        userRepository.save(user);
+
+//
+//        Login login = Login.builder()
+//                .email("ccn@naver.com")
+//                .password("1234")
+//                .build();
+//
+//        String json = objectMapper.writeValueAsString(login);
+        // expected
+        mockMvc.perform(MockMvcRequestBuilders.get("/foo")
+                        .header("Authorization",session.getAccessToken())
+                        .contentType(MediaType.APPLICATION_JSON)
+
+
+                )
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+
+
+    }
+
+    @Test
+    @DisplayName("로그인 후 권한이 필요한 페이지에 접속할때 인증 받은 세션인지 확인 테스트 /foo")
+    void test4() throws Exception{
+
+        // given
+        Users user = userRepository.save(Users.builder()
+                .name("ccn")
+                .email("ccn@naver.com")
+                .password("1234")
+                .build());
+        Session session = user.addSession();
+        userRepository.save(user);
+
+        // expected
+        mockMvc.perform(MockMvcRequestBuilders.get("/foo")
+                        .header("Authorization",session.getAccessToken()+"_")
+                        .contentType(MediaType.APPLICATION_JSON)
+
+
+                )
+                .andExpect(status().isUnauthorized())
+                .andDo(MockMvcResultHandlers.print());
+
 
 
     }

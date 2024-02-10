@@ -11,6 +11,7 @@ import io.jsonwebtoken.Jwts;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,17 @@ public class AuthController {
     private final String KEY = "kItB4fBY6rVkxV69VfrHdz/WpHiEVUVc2/8BPTEB3lA=";
 
     private final AuthService authService;
+
+
+    @GetMapping("/test")
+    public String test(){
+        return "Hello";
+    }
+
+    @GetMapping("/foo")
+    public Long foo(UserSession session){
+        return session.id;
+    }
     @PostMapping("/auth/login")
     public SessionResponse login(@RequestBody Login login){
 
