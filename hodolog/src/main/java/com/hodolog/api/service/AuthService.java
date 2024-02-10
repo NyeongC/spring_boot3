@@ -16,12 +16,12 @@ public class AuthService {
     private final UserRepository userRepository;
 
     @Transactional
-    public String signIn(Login request){
+    public Long signIn(Login request){
         Users users = userRepository.findByEmailAndPassword(request.getEmail(),request.getPassword())
                 .orElse(null);
 
         Session session = users.addSession();
 
-        return session.getAccessToken();
+        return users.getId();
     }
 }

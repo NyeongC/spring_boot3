@@ -1,0 +1,4 @@
+### 로그인
+GET http://localhost:8080/foo
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.McaGF0oDL5l_40l5Zz3Y-ORMa3-5M4aRGhnl_pYQCE8
