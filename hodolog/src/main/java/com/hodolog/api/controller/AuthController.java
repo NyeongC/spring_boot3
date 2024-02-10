@@ -24,14 +24,15 @@ public class AuthController {
 
     private final AuthService authService;
     @PostMapping("/auth/login")
-    public void login(@RequestBody Login login){
+    public SessionResponse login(@RequestBody Login login){
 
         // json 아이디/비밀번호
         // DB에서 조회
-        Users users = authService.signIn(login);
-        System.out.println("login = " + users);
+        String acessToken = authService.signIn(login);
 
+        System.out.println("acessToken = " + acessToken);
         // 토큰을 응답
+        return new SessionResponse(acessToken) ;
         
 
 //        SecretKey key = Jwts.SIG.HS256.key().build();
