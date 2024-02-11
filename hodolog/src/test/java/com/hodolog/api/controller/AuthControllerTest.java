@@ -6,6 +6,7 @@ import com.hodolog.api.domain.Users;
 import com.hodolog.api.repository.SessionRepository;
 import com.hodolog.api.repository.UserRepository;
 import com.hodolog.api.request.Login;
+import com.hodolog.api.request.Signup;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -171,5 +172,31 @@ class AuthControllerTest {
 
 
     }
+
+    @Test
+    @DisplayName("회원가입")
+    void test5() throws Exception{
+
+        // given
+        Signup signup = Signup.builder()
+                .name("ccn")
+                .email("ccn@naver.com")
+                .password("1234")
+                .build();
+
+        // expected
+        mockMvc.perform(MockMvcRequestBuilders.post("/auth/signup")
+                        .content(objectMapper.writeValueAsString(signup))
+                        .contentType(MediaType.APPLICATION_JSON)
+
+                )
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+
+
+    }
+
+
 
 }
