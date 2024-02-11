@@ -5,6 +5,7 @@ import com.hodolog.api.domain.Session;
 import com.hodolog.api.domain.Users;
 import com.hodolog.api.exception.AlreadyExistsEmailException;
 import com.hodolog.api.exception.InvalidRequest;
+import com.hodolog.api.exception.InvalidSigninInformation;
 import com.hodolog.api.repository.UserRepository;
 import com.hodolog.api.request.Login;
 import com.hodolog.api.request.Signup;
@@ -23,12 +24,21 @@ public class AuthService {
 
     @Transactional
     public Long signIn(Login request){
-        Users users = userRepository.findByEmailAndPassword(request.getEmail(),request.getPassword())
-                .orElse(null);
 
-        Session session = users.addSession();
+        Users user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(InvalidSigninInformation::new);
 
-        return users.getId();
+        SCryptPasswordEncoder encoder = new SCryptPasswordEncoder(16, 8,1
+                ,32,64);
+
+        var matches = encoder.matches(request.getPassword(),user.getPassword());
+
+        if(!matches){
+            throw new InvalidSigninInformation();
+        }
+
+
+        return user.getId();
     }
 
     public void signup(Signup signup) {
