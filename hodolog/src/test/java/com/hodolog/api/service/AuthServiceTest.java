@@ -4,8 +4,10 @@ import com.hodolog.api.domain.Users;
 import com.hodolog.api.exception.AlreadyExistsEmailException;
 import com.hodolog.api.repository.UserRepository;
 import com.hodolog.api.request.Signup;
-import org.apache.catalina.User;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,7 +47,8 @@ class AuthServiceTest {
 
         Users user = userRepository.findAll().iterator().next();
         assertEquals("ccn@naver.com",user.getEmail());
-        assertEquals("1234",user.getPassword());
+        assertNotNull(user.getPassword());
+        assertNotEquals("1234",user.getPassword());
         assertEquals("ccn",user.getName());
 
 
