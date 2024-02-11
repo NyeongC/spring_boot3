@@ -1,12 +1,12 @@
 package com.hodolog.api.service;
 
 import com.hodolog.api.domain.Users;
+import com.hodolog.api.exception.AlreadyExistsEmailException;
 import com.hodolog.api.repository.UserRepository;
 import com.hodolog.api.request.Signup;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.apache.catalina.User;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -47,6 +47,35 @@ class AuthServiceTest {
         assertEquals("ccn@naver.com",user.getEmail());
         assertEquals("1234",user.getPassword());
         assertEquals("ccn",user.getName());
+
+
+    }
+
+    @Test
+    @DisplayName("회원가입 시 중복된 이메일 존재")
+    void test2(){
+
+        // given
+        Users user = Users.builder()
+                .email("ccn@naver.com")
+                .build();
+
+        userRepository.save(user);
+
+        Signup signup = Signup.builder()
+                .name("ccn")
+                .email("ccn@naver.com")
+                .password("1234")
+                .build();
+
+
+        // expected
+        Assertions.assertThrows(AlreadyExistsEmailException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                authService.signup(signup);
+            }
+        });
 
 
     }
