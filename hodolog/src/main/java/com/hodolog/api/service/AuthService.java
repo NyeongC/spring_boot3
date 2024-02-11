@@ -18,7 +18,7 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    //private final PasswordEncoder passwordEncoder;
 
 
     public void signup(Signup signup) {
@@ -30,7 +30,8 @@ public class AuthService {
 
         }
 
-        String encryptedPassword = passwordEncoder.encrypt(signup.getPassword());
+        //String encryptedPassword = passwordEncoder.encrypt(signup.getPassword());
+        String encryptedPassword = "";
 
 
         Users user = Users.builder()

@@ -36,6 +36,8 @@ dependencies {
     implementation 'org.springframework.security:spring-security-crypto'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
 
+    implementation 'org.springframework.session:spring-session-jdbc'
+
 
 
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
