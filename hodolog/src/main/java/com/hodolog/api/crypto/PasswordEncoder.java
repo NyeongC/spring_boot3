@@ -1,7 +1,9 @@
 package com.hodolog.api.crypto;
 
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PasswordEncoder {
 
     private final SCryptPasswordEncoder encoder = new SCryptPasswordEncoder(

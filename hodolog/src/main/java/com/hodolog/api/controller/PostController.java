@@ -1,26 +1,16 @@
 package com.hodolog.api.controller;
 
-import com.hodolog.api.domain.Post;
 import com.hodolog.api.request.PostCreate;
 import com.hodolog.api.request.PostEdit;
 import com.hodolog.api.request.PostSearch;
 import com.hodolog.api.response.PostResponse;
-import com.hodolog.api.response.SessionResponse;
 import com.hodolog.api.service.PostService;
-import io.jsonwebtoken.Jwts;
-import jakarta.persistence.Lob;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.crypto.SecretKey;
-import java.util.Base64;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @Slf4j
