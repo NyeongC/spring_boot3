@@ -1,6 +1,7 @@
 package com.hodolog.api.service;
 
 
+import com.hodolog.api.crypto.PasswordEncoder;
 import com.hodolog.api.domain.Session;
 import com.hodolog.api.domain.Users;
 import com.hodolog.api.exception.AlreadyExistsEmailException;
@@ -28,9 +29,7 @@ public class AuthService {
         Users user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(InvalidSigninInformation::new);
 
-        SCryptPasswordEncoder encoder = new SCryptPasswordEncoder(16, 8,1
-                ,32,64);
-
+        PasswordEncoder encoder = new PasswordEncoder();
         var matches = encoder.matches(request.getPassword(),user.getPassword());
 
         if(!matches){
@@ -50,10 +49,8 @@ public class AuthService {
 
         }
 
-        SCryptPasswordEncoder encoder = new SCryptPasswordEncoder(16, 8,1
-                ,32,64);
-
-        String encryptedPassword = encoder.encode(signup.getPassword());
+        PasswordEncoder encoder = new PasswordEncoder();
+        String encryptedPassword = encoder.encrypt(signup.getPassword());
 
 
         Users user = Users.builder()

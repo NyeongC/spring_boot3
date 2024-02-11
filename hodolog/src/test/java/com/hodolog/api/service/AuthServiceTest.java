@@ -1,5 +1,6 @@
 package com.hodolog.api.service;
 
+import com.hodolog.api.crypto.PasswordEncoder;
 import com.hodolog.api.domain.Users;
 import com.hodolog.api.exception.AlreadyExistsEmailException;
 import com.hodolog.api.exception.InvalidSigninInformation;
@@ -90,13 +91,16 @@ class AuthServiceTest {
     void test3(){
 
         // given
-        Signup signup = Signup.builder()
-                .name("ccn")
+        PasswordEncoder encoder = new PasswordEncoder();
+        String encryptedPassword = encoder.encrypt("1234");
+
+        Users user = Users.builder()
                 .email("ccn@naver.com")
-                .password("1234")
+                .password(encryptedPassword)
+                .name("ccn")
                 .build();
 
-        authService.signup(signup);
+        userRepository.save(user);
 
         Login login = Login.builder()
                 .email("ccn@naver.com")
