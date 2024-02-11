@@ -24,8 +24,7 @@ import java.util.Optional;
 public class AuthResolver implements HandlerMethodArgumentResolver {
 
     private final SessionRepository sessionRepository;
-
-    private final String KEY = "kItB4fBY6rVkxV69VfrHdz/WpHiEVUVc2/8BPTEB3lA=";
+    private final AppConfig appConfig;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -34,16 +33,15 @@ public class AuthResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+
         String jws = webRequest.getHeader("Authorization");
         if(jws ==null || jws.equals("")){
             throw new Exception();
         }
 
-        byte[] decodedKey = Base64.decodeBase64(KEY);
-
         try {
             Jws<Claims> claimsJws = Jwts.parser()
-                    .setSigningKey(decodedKey)
+                    .setSigningKey(appConfig.getJwtKey())
                     .build()
                     .parseSignedClaims(jws);
 
