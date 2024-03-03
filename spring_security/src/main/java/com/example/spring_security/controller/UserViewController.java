@@ -8,7 +8,7 @@ public class UserViewController {
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "redirect:http://localhost:8081/signin";
     }
 
     @GetMapping("/signup")
