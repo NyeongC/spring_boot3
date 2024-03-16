@@ -1,0 +1,10 @@
+찾기 : Ctrl + F
+전체 찾기 : Ctrl + Shift + F
+바꾸기 : Ctrl + R
+전체 바꾸기 : Ctrl + Shift + R
+줄 복사 : Ctrl + D
+실행 : Shift + F10
+디버그 : Shift + F9
+리팩터링 : Shift + Ctrl + Alt + T
+테스트 : Shift + Ctrl + T
+임포트문 정리 : Ctrl + Alt + O
