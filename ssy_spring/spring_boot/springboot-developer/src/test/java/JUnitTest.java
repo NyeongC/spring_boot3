@@ -14,13 +14,13 @@ public class JUnitTest {
         Assertions.assertEquals(sum,a + b); // 첫번째 인자 기대값, 두번째 인자 실제값
     }
 
-    @DisplayName("1 + 3는 4이다.")
-    @Test
-    public void junitFailedTest(){
-        int a = 1;
-        int b = 3;
-        int sum = 3;
-
-        Assertions.assertEquals(sum, a + b);
-    }
+//    @DisplayName("1 + 3는 4이다.")
+//    @Test
+//    public void junitFailedTest(){
+//        int a = 1;
+//        int b = 3;
+//        int sum = 3;
+//
+//        Assertions.assertEquals(sum, a + b);
+//    }
 }
