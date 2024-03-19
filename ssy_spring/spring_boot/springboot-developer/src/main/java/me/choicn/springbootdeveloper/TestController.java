@@ -9,11 +9,12 @@ import java.util.List;
 @RestController
 public class TestController {
 
-    @Autowired
-    private MemberService memberService;
+    @Autowired // TestService 빈 주입
+    private TestService testService;
 
-    @GetMapping("/members")
-    public List<Member> members(){
-        return memberService.memberList();
+    @GetMapping("/test")
+    public List<Member> getAllMebers(){
+        List<Member> members = testService.getAllMembers();
+        return members;
     }
 }

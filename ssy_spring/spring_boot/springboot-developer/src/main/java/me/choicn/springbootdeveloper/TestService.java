@@ -6,13 +6,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MemberServiceImpl implements MemberService{
+public class TestService {
 
     @Autowired
-    private MemberRepository memberRepository;
-    @Override
-    public List<Member> memberList() {
+    MemberRepository memberRepository;
 
+    public List<Member> getAllMembers(){
         return memberRepository.findAll();
     }
 }
