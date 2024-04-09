@@ -27,6 +27,10 @@ dependencies {
     implementation 'org.springframework.security:spring-security-test:'
     // 타임리프에서 시큐리티 사용하기 위한 의존성
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    // jwt
+    implementation 'io.jsonwebtoken:jjwt:0.9.1' // 자바 JWT 라이브러리
+    implementation 'javax.xml.bind:jaxb-api:2.3.1' // XML 문서와 Java 객체 간 매핑 자동화
+
     runtimeOnly 'com.h2database:h2' // 인메모리 데이터베이스
     compileOnly 'org.projectlombok:lombok' // 롬복
     annotationProcessor 'org.projectlombok:lombok'
