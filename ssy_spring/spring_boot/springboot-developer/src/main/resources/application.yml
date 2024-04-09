@@ -16,3 +16,7 @@ spring:
     console:
       enabled: true
 
+jwt:
+  issuer: ccn@cnchoi@lotte.net
+  secret_key: study-springboot
+
