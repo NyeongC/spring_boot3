@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import me.choicn.springbootdeveloper.domain.User;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -14,6 +15,11 @@ import java.util.Date;
 public class TokenProvider {
     
     private final JwtProperties jwtProperties;
+
+    public String generateToken(User user, Duration expiredAt) {
+        Date now = new Date();
+        return makeToken(new Date(now.getTime() + expiredAt.toMillis()), user);
+    }
     
     // JWT 토큰 생성 메서드
     private String makeToken(Date expiry, User user){
@@ -31,6 +37,18 @@ public class TokenProvider {
                 // 서명 : 비밀값과 함께 해시값을 HS256 방식으로 암호화
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
+    }
+
+    // JWT 토큰 유효성 검증 메서드
+    public boolean validToken(String token) {
+        try {
+            Jwts.parser()
+                    .setSigningKey(jwtProperties.getSecretKey())
+                    .parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
     
 }
