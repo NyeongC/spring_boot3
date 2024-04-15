@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Duration;
+import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,5 +43,21 @@ public class TokenProviderTest {
                 .getBody()
                 .get("id", Long.class);
         assertThat(userId).isEqualTo(testUser.getId());
+    }
+
+    @DisplayName("validToken(): 만료된 토큰인 때에 유효성 검증에 실패한다.")
+    @Test
+    void validToken_invalidToken() {
+        // given
+        String token = JwtFactory.builder()
+                .expiration(new Date(new Date().getTime() - Duration.ofDays(7).toMillis()))
+                .build()
+                .createToken(jwtProperties);
+
+        // when
+        boolean result = tokenProvider.validToken(token);
+
+        // then
+        assertThat(result).isFalse();
     }
 }
