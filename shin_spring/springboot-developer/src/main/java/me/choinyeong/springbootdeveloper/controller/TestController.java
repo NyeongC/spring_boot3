@@ -15,7 +15,7 @@ public class TestController {
     @Autowired
     TestService testService;
 
-    @GetMapping("/")
+    @GetMapping("/test")
     public List<Member> getAllMembers() {
         List<Member> members = testService.getAMembers();
         return members;
