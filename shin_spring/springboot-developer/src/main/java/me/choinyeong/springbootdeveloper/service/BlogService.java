@@ -7,6 +7,8 @@ import me.choinyeong.springbootdeveloper.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class BlogService {
@@ -16,5 +18,9 @@ public class BlogService {
 
     public Article save(ArticleRequest request){
         return blogRepository.save(request.toEntity());
+    }
+
+    public List<Article> findAll() {
+        return blogRepository.findAll();
     }
 }
