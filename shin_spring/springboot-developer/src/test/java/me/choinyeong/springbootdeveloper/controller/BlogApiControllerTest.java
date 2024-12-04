@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.choinyeong.springbootdeveloper.domain.Article;
 import me.choinyeong.springbootdeveloper.dto.ArticleRequest;
+import me.choinyeong.springbootdeveloper.dto.UpdateArticleRequest;
 import me.choinyeong.springbootdeveloper.repository.BlogRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -125,6 +126,7 @@ class BlogApiControllerTest {
     }
 
     @DisplayName("deleteArticle: 블로그 글 삭제에 성공한다.")
+
     @Test
     public void deleteArticle() throws Exception {
         // given
@@ -145,6 +147,42 @@ class BlogApiControllerTest {
         List<Article> articles = blogRepository.findAll();
 
         assertThat(articles).isEmpty();
+    }
+
+    @DisplayName("updateArticle: 블로그 글 수정에 성공한다.")
+    @Test
+    public void updateArticle() throws Exception {
+
+        // given
+        String url = "/api/articles/{id}";
+        String content = "content";
+        String title = "title";
+
+        Article savedArticle = blogRepository.save(Article.builder()
+                .content(content)
+                .title(title)
+                .build());
+
+        String newTitle = "new title";
+        String newContent = "new content";
+
+        UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newContent);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(put(url, savedArticle.getId())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(request)));
+
+        // then
+        resultActions.andExpect(status().isOk());
+
+        Article article = blogRepository.findById(savedArticle.getId()).get();
+        assertThat(article.getTitle()).isEqualTo(newTitle);
+        assertThat(article.getContent()).isEqualTo(newContent);
+
+
+
+
     }
 
 }
