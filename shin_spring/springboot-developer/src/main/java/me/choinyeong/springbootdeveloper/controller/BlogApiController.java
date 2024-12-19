@@ -2,6 +2,7 @@ package me.choinyeong.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.choinyeong.springbootdeveloper.domain.Article;
+import me.choinyeong.springbootdeveloper.dto.AddArticleRequest;
 import me.choinyeong.springbootdeveloper.dto.ArticleRequest;
 import me.choinyeong.springbootdeveloper.dto.ArticleResponse;
 import me.choinyeong.springbootdeveloper.dto.UpdateArticleRequest;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,8 +23,9 @@ public class BlogApiController {
     private final BlogService blogService;
 
     @PostMapping("/api/articles")
-    public ResponseEntity<Article> save(@RequestBody ArticleRequest request) {
-        Article savedArticle = blogService.save(request);
+    public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request, Principal principal) {
+        Article savedArticle = blogService.save(request, principal.getName());
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(savedArticle);
     }
