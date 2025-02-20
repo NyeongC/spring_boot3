@@ -20,6 +20,8 @@ public class Article {
 
     @Column
     private String title;
+
+    @Lob
     @Column
     private String content;
 
