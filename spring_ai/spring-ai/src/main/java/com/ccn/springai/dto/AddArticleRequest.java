@@ -1,4 +1,4 @@
-package com.ccn.springai;
+package com.ccn.springai.dto;
 
 import com.ccn.springai.domain.Article;
 import lombok.AllArgsConstructor;

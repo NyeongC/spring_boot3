@@ -1,6 +1,6 @@
 package com.ccn.springai.controller;
 
-import com.ccn.springai.AddArticleRequest;
+import com.ccn.springai.dto.AddArticleRequest;
 import com.ccn.springai.domain.Article;
 import com.ccn.springai.repository.BlogRepository;
 import org.junit.jupiter.api.BeforeEach;
