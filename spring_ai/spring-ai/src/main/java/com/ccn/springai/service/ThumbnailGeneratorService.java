@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.net.URI;
+import java.util.Base64;
 
 @Service
 public class ThumbnailGeneratorService {
@@ -40,10 +41,18 @@ public class ThumbnailGeneratorService {
         ImageResponse response = imageModel.call(new ImagePrompt(prompt));
         Image image = response.getResult().getOutput();
 
-        byte[] bytes = restClient.get()
-                .uri(URI.create(image.getUrl()))
-                .retrieve()
-                .body(byte[].class);
+        byte[] bytes;
+
+        if (image.getUrl() != null) {
+            bytes = restClient.get()
+                    .uri(URI.create(image.getUrl()))
+                    .retrieve()
+                    .body(byte[].class);
+        } else if (image.getB64Json() != null) {
+            bytes = Base64.getDecoder().decode(image.getB64Json());
+        } else {
+            throw new IllegalStateException("이미지 응답에 URL과 Base64 데이터가 모두 없습니다.");
+        }
 
         UploadResponse saved = fileStorageService.store(bytes, "thumbnail.png");
 
