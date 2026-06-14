@@ -1,10 +1,9 @@
 package com.ccn.springai.controller;
 
-import com.ccn.springai.dto.AddArticleRequest;
+import com.ccn.springai.dto.*;
 import com.ccn.springai.domain.Article;
-import com.ccn.springai.dto.ArticleResponse;
-import com.ccn.springai.dto.UpdateArticleRequest;
 import com.ccn.springai.service.BlogService;
+import com.ccn.springai.service.WritingAssistantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +16,8 @@ import java.util.List;
 public class BlogApiController {
 
     private final BlogService blogService;
+
+    private final WritingAssistantService writingAssistantService;
 
     @PostMapping("/api/articles")
     public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request) {
@@ -55,5 +56,13 @@ public class BlogApiController {
         Article updatedArticle = blogService.update(id, request);
         return ResponseEntity.ok()
                 .body(updatedArticle);
+    }
+
+    @PostMapping("/api/ai-suggestions")
+    public ResponseEntity<WritingSuggestionsResponse> writingAssist(@RequestBody WritingSuggestionRequest request) {
+        WritingSuggestionsResponse response = writingAssistantService.getWritingAssist(request);
+
+        return ResponseEntity.ok()
+                .body(response);
     }
 }
