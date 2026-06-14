@@ -3,6 +3,7 @@ package com.ccn.springai.controller;
 import com.ccn.springai.dto.*;
 import com.ccn.springai.domain.Article;
 import com.ccn.springai.service.BlogService;
+import com.ccn.springai.service.ThumbnailGeneratorService;
 import com.ccn.springai.service.WritingAssistantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ public class BlogApiController {
     private final BlogService blogService;
 
     private final WritingAssistantService writingAssistantService;
+    private final ThumbnailGeneratorService thumbnailGeneratorService;
 
     @PostMapping("/api/articles")
     public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request) {
@@ -61,6 +63,14 @@ public class BlogApiController {
     @PostMapping("/api/ai-suggestions")
     public ResponseEntity<WritingSuggestionsResponse> writingAssist(@RequestBody WritingSuggestionRequest request) {
         WritingSuggestionsResponse response = writingAssistantService.getWritingAssist(request);
+
+        return ResponseEntity.ok()
+                .body(response);
+    }
+
+    @PostMapping("/api/ai-thumbnails")
+    public ResponseEntity<GeneratorThumbnailResponse> thumbnailGenerator(@RequestBody GeneratorThumbnailRequest request) {
+        GeneratorThumbnailResponse response = thumbnailGeneratorService.generateThumbnail(request);
 
         return ResponseEntity.ok()
                 .body(response);
