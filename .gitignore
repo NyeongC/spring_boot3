@@ -1,0 +1,8 @@
+spring_ai/spring-ai/.gitattributes
+spring_ai/spring-ai/.gitignore
+spring_ai/spring-ai/gradlew
+spring_ai/spring-ai/settings.gradle
+spring_ai/spring-ai/gradle/wrapper/gradle-wrapper.jar
+spring_ai/spring-ai/gradle/wrapper/gradle-wrapper.properties
+spring_ai/spring-ai/gradlew.bat
+*.jar
