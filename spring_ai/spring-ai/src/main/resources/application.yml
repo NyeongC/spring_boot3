@@ -20,3 +20,6 @@ spring:
           model: gpt-image-1-mini
           size: 1024x1024
           quality: low
+jwt:
+  issuer: cjfsud23@naver.com
+  secret-key: study-test
