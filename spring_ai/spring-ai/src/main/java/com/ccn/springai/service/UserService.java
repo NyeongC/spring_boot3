@@ -14,9 +14,11 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public Long save(AddUserRequest dto) {
+        String role = dto.isAdmin() ? "ROLE_ADMIN" : "ROLE_USER";
         return userRepository.save(User.builder()
                 .email(dto.getEmail())
                 .password(passwordEncoder.encode(dto.getPassword()))
+                .role(role)
                 .build()).getId();
     }
 }
